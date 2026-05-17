@@ -139,7 +139,7 @@ export function Contact() {
                   <ContactLink
                     href="mailto:sakshi@example.com"
                     icon={<Mail className="w-5 h-5" />}
-                    label="sakshi@example.com"
+                    label="sakshimaulekhi84@gmail.com"
                   />
                   <ContactLink
                     href="https://github.com"
