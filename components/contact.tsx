@@ -136,22 +136,24 @@ export function Contact() {
                 </div>
 
                 <div className="space-y-4">
-                  <ContactLink
-                    href="mailto:sakshimaulekhi84@gmail.com"
-                    icon={<Mail className="w-5 h-5" />}
-                    label="=your@example.com"
-                  />
-                  <ContactLink
-                    href="https://github.com/Sakshi-maulekhi"
-                    icon={<Github className="w-5 h-5" />}
-                    label="github.com/sakshi"
-                  />
-                  <ContactLink
-                    href="www.linkedin.com/in/sakshi-maulekhi-9b369b306"
-                    icon={<Linkedin className="w-5 h-5" />}
-                    label="linkedin.com/in/sakshi"
-                  />
-                </div>
+  <ContactLink
+    href="mailto:sakshimaulekhi84@gmail.com"
+    icon={<Mail className="w-5 h-5" />}
+    label="sakshimaulekhi84@gmail.com"
+  />
+
+  <ContactLink
+    href="https://github.com/Sakshi-maulekhi"
+    icon={<Github className="w-5 h-5" />}
+    label="GitHub"
+  />
+
+  <ContactLink
+    href="https://www.linkedin.com/in/sakshi-maulekhi-9b369b306"
+    icon={<Linkedin className="w-5 h-5" />}
+    label="LinkedIn"
+  />
+</div>
               </div>
             </motion.div>
           </div>
