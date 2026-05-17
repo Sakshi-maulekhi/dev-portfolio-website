@@ -93,9 +93,9 @@ export function Hero() {
             transition={{ duration: 0.5, delay: 0.5 }}
             className="flex justify-center gap-4"
           >
-            <SocialLink href="https://github.com" icon={<Github size={20} />} label="GitHub" />
-            <SocialLink href="https://linkedin.com" icon={<Linkedin size={20} />} label="LinkedIn" />
-            <SocialLink href="https://leetcode.com" icon={<LeetCodeIcon />} label="LeetCode" />
+            <SocialLink href="https://github.com/Sakshi-maulekhi" icon={<Github size={20} />} label="GitHub" />
+            <SocialLink href="www.linkedin.com/in/sakshi-maulekhi-9b369b306" icon={<Linkedin size={20} />} label="LinkedIn" />
+            <SocialLink href="https://leetcode.com/u/sakshi_m23/" icon={<LeetCodeIcon />} label="LeetCode" />
           </motion.div>
         </div>
       </div>
