@@ -25,9 +25,9 @@ const achievements = [
   },
   {
     icon: <Award className="w-6 h-6" />,
-    stat: "Top 7%",
-    label: "Flipkart GRiD 7.0",
-    description: "Shortlisted in national hackathon",
+    stat: "Flipkart GRiD 7.0",
+    
+    description: "Shortlisted in flagship engineering campus challenge",
   },
 ]
 
