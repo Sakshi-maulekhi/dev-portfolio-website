@@ -72,12 +72,12 @@ export function Hero() {
                 View Projects
               </a>
             </Button>
-            <Button size="lg" variant="outline" className="glass border-primary/50" asChild>
+            {/* <Button size="lg" variant="outline" className="glass border-primary/50" asChild>
               <a href="/resume.pdf" download="Sakshi_Maulekhi_Resume.pdf">
                 <Download className="mr-2 h-4 w-4" />
                 Download Resume
               </a>
-            </Button>
+            </Button> */}
             <Button size="lg" variant="outline" className="glass" asChild>
               <a href="#contact">
                 <Mail className="mr-2 h-4 w-4" />
