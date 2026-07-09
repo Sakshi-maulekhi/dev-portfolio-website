@@ -75,13 +75,13 @@ export function Achievements() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: 0.3 + index * 0.1 }}
-                whileHover={{ y: -5, scale: 1.02 }}
-                className="glass rounded-2xl p-6 text-center group glow hover:glow"
+                whileHover={{ y: -8, scale: 1.05 }}
+                className="glass-pink rounded-2xl p-6 text-center group border border-pink-400/20 hover:border-pink-400/40 transition-all"
               >
                 <motion.div
-                  whileHover={{ rotate: 360 }}
-                  transition={{ duration: 0.5 }}
-                  className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center text-primary mx-auto mb-4"
+                  whileHover={{ scale: 1.2, rotate: 5 }}
+                  transition={{ duration: 0.4, type: "spring" }}
+                  className="w-14 h-14 rounded-xl bg-pink-400/15 flex items-center justify-center text-pink-300 mx-auto mb-4"
                 >
                   {achievement.icon}
                 </motion.div>
@@ -93,7 +93,7 @@ export function Achievements() {
                 >
                   {achievement.stat}
                 </motion.span>
-                <h3 className="font-semibold text-foreground mb-1">{achievement.label}</h3>
+                <h3 className="font-serif font-bold text-foreground mb-1 text-pink-100">{achievement.label}</h3>
                 <p className="text-sm text-muted-foreground">{achievement.description}</p>
               </motion.div>
             ))}

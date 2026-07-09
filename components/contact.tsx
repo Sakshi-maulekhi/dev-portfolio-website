@@ -67,56 +67,62 @@ export function Contact() {
               animate={isInView ? { opacity: 1, x: 0 } : {}}
               transition={{ delay: 0.4 }}
             >
-              <form onSubmit={handleSubmit} className="glass rounded-2xl p-6 space-y-4">
+              <form onSubmit={handleSubmit} className="glass-pink rounded-2xl p-8 space-y-5 border border-pink-400/20">
                 <div>
-                  <label htmlFor="name" className="text-sm font-medium text-foreground mb-2 block">
+                  <label htmlFor="name" className="text-sm font-semibold text-foreground mb-2 block">
                     Name
                   </label>
                   <Input
                     id="name"
                     placeholder="Your name"
-                    className="bg-secondary/50 border-border focus:border-primary"
+                    className="bg-pink-400/5 border-pink-400/20 focus:border-pink-400/50 focus:bg-pink-400/10 text-foreground placeholder:text-muted-foreground"
                     required
                   />
                 </div>
                 <div>
-                  <label htmlFor="email" className="text-sm font-medium text-foreground mb-2 block">
+                  <label htmlFor="email" className="text-sm font-semibold text-foreground mb-2 block">
                     Email
                   </label>
                   <Input
                     id="email"
                     type="email"
                     placeholder="your@email.com"
-                    className="bg-secondary/50 border-border focus:border-primary"
+                    className="bg-pink-400/5 border-pink-400/20 focus:border-pink-400/50 focus:bg-pink-400/10 text-foreground placeholder:text-muted-foreground"
                     required
                   />
                 </div>
                 <div>
-                  <label htmlFor="message" className="text-sm font-medium text-foreground mb-2 block">
+                  <label htmlFor="message" className="text-sm font-semibold text-foreground mb-2 block">
                     Message
                   </label>
                   <Textarea
                     id="message"
                     placeholder="Your message..."
                     rows={4}
-                    className="bg-secondary/50 border-border focus:border-primary resize-none"
+                    className="bg-pink-400/5 border-pink-400/20 focus:border-pink-400/50 focus:bg-pink-400/10 text-foreground placeholder:text-muted-foreground resize-none"
                     required
                   />
                 </div>
-                <Button type="submit" className="w-full glow" disabled={isSubmitting}>
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full glass-pink px-6 py-3 rounded-lg font-semibold text-foreground border border-pink-400/40 hover:border-pink-400/70 transition-all"
+                >
                   {isSubmitting ? (
                     <motion.div
                       animate={{ rotate: 360 }}
                       transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
-                      className="w-5 h-5 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full"
+                      className="w-5 h-5 border-2 border-pink-400/30 border-t-pink-400 rounded-full inline-block"
                     />
                   ) : (
                     <>
-                      <Send className="mr-2 h-4 w-4" />
+                      <Send className="inline mr-2 h-4 w-4" />
                       Send Message
                     </>
                   )}
-                </Button>
+                </motion.button>
               </form>
             </motion.div>
 
@@ -127,9 +133,9 @@ export function Contact() {
               transition={{ delay: 0.5 }}
               className="flex flex-col justify-center"
             >
-              <div className="glass rounded-2xl p-6 space-y-6">
+              <div className="glass-pink rounded-2xl p-8 space-y-6 border border-pink-400/20">
                 <div>
-                  <h3 className="text-lg font-semibold text-foreground mb-4">Connect With Me</h3>
+                  <h3 className="text-xl font-serif font-bold text-foreground mb-4 text-pink-100">Connect With Me</h3>
                   <p className="text-muted-foreground text-sm leading-relaxed">
                     I&apos;m always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
                   </p>
@@ -169,10 +175,10 @@ function ContactLink({ href, icon, label }: { href: string; icon: React.ReactNod
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      whileHover={{ x: 5 }}
-      className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors group"
+      whileHover={{ x: 8 }}
+      className="flex items-center gap-3 text-muted-foreground hover:text-pink-200 transition-colors group"
     >
-      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+      <div className="w-10 h-10 rounded-lg bg-pink-400/15 flex items-center justify-center text-pink-300 group-hover:bg-pink-400/25 transition-colors">
         {icon}
       </div>
       <span className="text-sm group-hover:text-foreground transition-colors">{label}</span>

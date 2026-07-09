@@ -74,10 +74,10 @@ export function Skills() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: 0.2 + categoryIndex * 0.1 }}
-                whileHover={{ y: -5 }}
-                className="glass rounded-2xl p-6 group"
+                whileHover={{ y: -8 }}
+                className="glass-pink rounded-2xl p-6 group border border-pink-400/20 hover:border-pink-400/40 transition-all duration-300"
               >
-                <h3 className="text-lg font-semibold mb-4 text-foreground group-hover:text-primary transition-colors">
+                <h3 className="text-lg font-serif font-bold mb-4 text-foreground group-hover:text-pink-300 transition-colors">
                   {category.title}
                 </h3>
                 <div className="flex flex-wrap gap-2">
@@ -87,8 +87,8 @@ export function Skills() {
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={isInView ? { opacity: 1, scale: 1 } : {}}
                       transition={{ delay: 0.3 + categoryIndex * 0.1 + skillIndex * 0.05 }}
-                      whileHover={{ scale: 1.05 }}
-                      className="px-3 py-1.5 text-sm rounded-lg bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20 transition-colors cursor-default"
+                      whileHover={{ scale: 1.08, boxShadow: "0 0 10px rgba(255, 111, 181, 0.3)" }}
+                      className="px-3 py-1.5 text-sm rounded-lg bg-pink-400/10 text-pink-200 border border-pink-400/30 hover:border-pink-400/60 transition-all cursor-default"
                     >
                       {skill}
                     </motion.span>

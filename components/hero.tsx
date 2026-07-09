@@ -1,17 +1,38 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Github, Linkedin, ExternalLink, Download, Mail } from "lucide-react"
+import { Github, Linkedin, ExternalLink, Mail } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 export function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-grid">
-      {/* Animated gradient blobs */}
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-grid pt-20">
+      {/* Animated gradient blobs - Pink and Lavender */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 -left-4 w-72 h-72 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob" />
-        <div className="absolute top-1/3 -right-4 w-72 h-72 bg-violet-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000" />
-        <div className="absolute -bottom-8 left-1/3 w-72 h-72 bg-fuchsia-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000" />
+        <motion.div
+          animate={{ 
+            x: [0, 30, -30, 0],
+            y: [0, -30, 30, 0],
+          }}
+          transition={{ duration: 8, repeat: Infinity }}
+          className="absolute top-1/4 -left-32 w-96 h-96 bg-pink-400 rounded-full mix-blend-multiply filter blur-3xl opacity-15 glow-circle"
+        />
+        <motion.div
+          animate={{ 
+            x: [0, -30, 30, 0],
+            y: [0, 30, -30, 0],
+          }}
+          transition={{ duration: 10, repeat: Infinity, delay: 1 }}
+          className="absolute top-1/3 -right-32 w-96 h-96 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl opacity-15 glow-circle"
+        />
+        <motion.div
+          animate={{ 
+            x: [0, 20, -20, 0],
+            y: [0, -20, 20, 0],
+          }}
+          transition={{ duration: 12, repeat: Infinity, delay: 2 }}
+          className="absolute -bottom-32 left-1/3 w-96 h-96 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-10 glow-circle"
+        />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
@@ -28,15 +49,16 @@ export function Hero() {
             </span>
           </motion.div>
 
-          {/* Name */}
+          {/* Name - Premium Typography */}
           <motion.h1
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 text-balance"
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold mb-4 text-balance leading-tight"
           >
-            Hi, I&apos;m{" "}
-            <span className="gradient-text glow-text">Sakshi Maulekhi</span>
+            <span className="text-foreground">Sakshi</span>
+            <br />
+            <span className="gradient-text glow-text">Maulekhi</span>
           </motion.h1>
 
           {/* Title */}
@@ -59,31 +81,31 @@ export function Hero() {
             I build modern full-stack web applications with beautiful UI, real-time features, and scalable backend systems.
           </motion.p>
 
-          {/* CTA Buttons */}
+          {/* CTA Buttons - Glassmorphism */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
             className="flex flex-wrap justify-center gap-4 mb-8"
           >
-            <Button size="lg" className="glow" asChild>
-              <a href="#projects">
-                <ExternalLink className="mr-2 h-4 w-4" />
-                View Projects
-              </a>
-            </Button>
-            {/* <Button size="lg" variant="outline" className="glass border-primary/50" asChild>
-              <a href="/resume.pdf" download="Sakshi_Maulekhi_Resume.pdf">
-                <Download className="mr-2 h-4 w-4" />
-                Download Resume
-              </a>
-            </Button> */}
-            <Button size="lg" variant="outline" className="glass" asChild>
-              <a href="#contact">
-                <Mail className="mr-2 h-4 w-4" />
-                Contact Me
-              </a>
-            </Button>
+            <motion.button
+              whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(255, 111, 181, 0.4)" }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+              className="glass-pink px-8 py-3 rounded-xl font-medium text-foreground transition-all border border-pink-400/30 hover:border-pink-400/60 backdrop-blur-md"
+            >
+              <ExternalLink className="inline mr-2 h-4 w-4" />
+              View Projects
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+              className="glass px-8 py-3 rounded-xl font-medium text-foreground border border-white/10 hover:border-pink-400/40 transition-all"
+            >
+              <Mail className="inline mr-2 h-4 w-4" />
+              Contact Me
+            </motion.button>
           </motion.div>
 
           {/* Social Links */}
@@ -125,9 +147,9 @@ function SocialLink({ href, icon, label }: { href: string; icon: React.ReactNode
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="w-10 h-10 rounded-full glass flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors"
-      whileHover={{ scale: 1.1, y: -2 }}
-      whileTap={{ scale: 0.95 }}
+      className="w-12 h-12 rounded-full glass flex items-center justify-center text-muted-foreground transition-all border border-white/10 hover:border-pink-400/40 hover:text-pink-300"
+      whileHover={{ scale: 1.15, y: -5 }}
+      whileTap={{ scale: 0.9 }}
       aria-label={label}
     >
       {icon}

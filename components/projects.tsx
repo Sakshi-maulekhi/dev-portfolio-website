@@ -87,15 +87,15 @@ function ProjectCard({ project, index, isInView }: {
     >
       <motion.div
         animate={{ 
-          rotateX: isHovered ? 5 : 0,
-          rotateY: isHovered ? -5 : 0,
+          rotateX: isHovered ? 3 : 0,
+          rotateY: isHovered ? -3 : 0,
         }}
         transition={{ type: "spring", stiffness: 300, damping: 20 }}
-        className="glass rounded-2xl overflow-hidden border border-border hover:border-primary/50 transition-colors"
+        className="glass rounded-2xl overflow-hidden border border-pink-400/20 hover:border-pink-400/40 transition-all duration-300"
         style={{ transformStyle: "preserve-3d" }}
       >
         {/* Image placeholder with gradient */}
-        <div className="relative h-48 bg-gradient-to-br from-primary/20 via-primary/10 to-transparent overflow-hidden">
+        <div className="relative h-48 bg-gradient-to-br from-pink-500/15 via-purple-500/10 to-transparent overflow-hidden">
           <div className="absolute inset-0 bg-grid opacity-30" />
           <motion.div
             animate={{ scale: isHovered ? 1.1 : 1 }}
@@ -109,30 +109,36 @@ function ProjectCard({ project, index, isInView }: {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: isHovered ? 1 : 0 }}
-            className="absolute inset-0 bg-background/80 backdrop-blur-sm flex items-center justify-center gap-4"
+            className="absolute inset-0 bg-background/70 backdrop-blur-lg flex items-center justify-center gap-4"
           >
-            <Button size="sm" className="glow" asChild>
-              <a href={project.demo} target="_blank" rel="noopener noreferrer">
-                <ExternalLink className="mr-2 h-4 w-4" />
-                Live Demo
-              </a>
-            </Button>
-            <Button size="sm" variant="outline" className="glass" asChild>
-              <a href={project.github} target="_blank" rel="noopener noreferrer">
-                <Github className="mr-2 h-4 w-4" />
-                GitHub
-              </a>
-            </Button>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => window.open(project.demo, '_blank')}
+              className="glass-pink px-4 py-2 rounded-lg font-medium text-sm text-foreground border border-pink-400/40 hover:border-pink-400/70"
+            >
+              <ExternalLink className="inline mr-2 h-3 w-3" />
+              Live Demo
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => window.open(project.github, '_blank')}
+              className="glass px-4 py-2 rounded-lg font-medium text-sm border border-white/10 hover:border-pink-400/40"
+            >
+              <Github className="inline mr-2 h-3 w-3" />
+              GitHub
+            </motion.button>
           </motion.div>
         </div>
 
         {/* Content */}
         <div className="p-6">
           <div className="flex items-center justify-between mb-3">
-            <h3 className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors">
+            <h3 className="text-xl font-serif font-bold text-foreground group-hover:text-pink-300 transition-colors">
               {project.title}
             </h3>
-            <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
+            <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-pink-300 group-hover:translate-x-1 transition-all" />
           </div>
           <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
             {project.description}
@@ -141,7 +147,7 @@ function ProjectCard({ project, index, isInView }: {
             {project.tech.map((tech) => (
               <span
                 key={tech}
-                className="px-2 py-1 text-xs rounded-md bg-secondary text-secondary-foreground"
+                className="px-2 py-1 text-xs rounded-md bg-pink-400/10 text-pink-200 border border-pink-400/20"
               >
                 {tech}
               </span>

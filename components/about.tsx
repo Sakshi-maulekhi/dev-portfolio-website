@@ -92,14 +92,14 @@ export function About() {
 function AboutCard({ icon, title, description }: { icon: React.ReactNode; title: string; description: string }) {
   return (
     <motion.div
-      whileHover={{ scale: 1.02, x: 5 }}
-      className="glass rounded-xl p-4 flex items-start gap-4"
+      whileHover={{ scale: 1.05, y: -5 }}
+      className="glass-pink rounded-xl p-6 flex items-start gap-4 border border-pink-400/20 hover:border-pink-400/40 transition-all"
     >
-      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
+      <div className="w-12 h-12 rounded-lg bg-pink-400/15 flex items-center justify-center text-pink-300 shrink-0">
         {icon}
       </div>
       <div>
-        <h3 className="font-semibold text-foreground">{title}</h3>
+        <h3 className="font-serif font-bold text-foreground text-pink-100">{title}</h3>
         <p className="text-sm text-muted-foreground">{description}</p>
       </div>
     </motion.div>

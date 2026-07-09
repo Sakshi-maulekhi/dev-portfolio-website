@@ -1,9 +1,10 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
+import { Playfair_Display, Poppins, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
-const _geist = Geist({ subsets: ["latin"] });
+const playfair = Playfair_Display({ subsets: ["latin"], weight: ["700", "900"] })
+const poppins = Poppins({ subsets: ["latin"], weight: ["400", "500", "600", "700"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
