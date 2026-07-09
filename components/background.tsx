@@ -3,12 +3,28 @@
 import { useEffect, useRef, useState } from "react"
 import { motion } from "framer-motion"
 
+interface TrailParticle {
+  x: number
+  y: number
+  createdAt: number
+  vx: number
+  vy: number
+}
+
 export function Background() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const cursorRef = useRef({ x: 0, y: 0 })
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+  const trailParticlesRef = useRef<TrailParticle[]>([])
+  const lastMousePosRef = useRef({ x: 0, y: 0 })
+  const isMouseMovingRef = useRef(false)
+  const animationFrameIdRef = useRef<number>(0)
+  const isMobileRef = useRef(false)
 
-  // Twinkling stars animation
+  useEffect(() => {
+    // Detect mobile
+    isMobileRef.current = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+  }, [])
+
+  // Stars and cursor trail animation
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
@@ -31,7 +47,8 @@ export function Background() {
       twinkleOffset: Math.random() * 10000,
     }))
 
-    let animationFrameId: number
+    const TRAIL_LIFETIME = 550 // ms
+    const TRAIL_WIDTH = 3
 
     const animate = () => {
       ctx.fillStyle = "rgba(5, 5, 16, 1)"
@@ -54,7 +71,54 @@ export function Background() {
         ctx.fill()
       })
 
-      animationFrameId = requestAnimationFrame(animate)
+      // Draw and update cursor trail particles
+      if (!isMobileRef.current) {
+        const particles = trailParticlesRef.current
+
+        for (let i = particles.length - 1; i >= 0; i--) {
+          const particle = particles[i]
+          const age = currentTime - particle.createdAt
+          const progress = age / TRAIL_LIFETIME
+
+          if (progress >= 1) {
+            particles.splice(i, 1)
+            continue
+          }
+
+          // Easing: cubic-bezier(0.25, 0.46, 0.45, 0.94) - smooth deceleration
+          const easeProgress =
+            3 * (1 - progress) * (1 - progress) * progress +
+            (1 - progress) * (1 - progress) * (1 - progress)
+
+          const opacity = (1 - progress) * 0.6
+
+          // Draw main trail with pink
+          const mainAlpha = opacity * easeProgress
+          ctx.strokeStyle = `rgba(255, 111, 181, ${mainAlpha})`
+          ctx.lineWidth = TRAIL_WIDTH
+          ctx.lineCap = "round"
+          ctx.lineJoin = "round"
+
+          // Draw a small segment from particle position with velocity
+          const nextX = particle.x + particle.vx * 0.5
+          const nextY = particle.y + particle.vy * 0.5
+
+          ctx.beginPath()
+          ctx.moveTo(particle.x, particle.y)
+          ctx.lineTo(nextX, nextY)
+          ctx.stroke()
+
+          // Draw lavender highlight (inner glow)
+          ctx.strokeStyle = `rgba(192, 132, 252, ${mainAlpha * 0.4})`
+          ctx.lineWidth = TRAIL_WIDTH * 0.6
+          ctx.beginPath()
+          ctx.moveTo(particle.x, particle.y)
+          ctx.lineTo(nextX, nextY)
+          ctx.stroke()
+        }
+      }
+
+      animationFrameIdRef.current = requestAnimationFrame(animate)
     }
 
     animate()
@@ -67,16 +131,46 @@ export function Background() {
     window.addEventListener("resize", handleResize)
 
     return () => {
-      cancelAnimationFrame(animationFrameId)
+      cancelAnimationFrame(animationFrameIdRef.current)
       window.removeEventListener("resize", handleResize)
     }
   }, [])
 
-  // Mouse tracking for cursor glow
+  // Mouse tracking for cursor trail
   useEffect(() => {
+    if (isMobileRef.current) return
+
     const handleMouseMove = (e: MouseEvent) => {
-      cursorRef.current = { x: e.clientX, y: e.clientY }
-      setMousePosition({ x: e.clientX, y: e.clientY })
+      const currentPos = { x: e.clientX, y: e.clientY }
+      const lastPos = lastMousePosRef.current
+
+      // Calculate velocity
+      const vx = currentPos.x - lastPos.x
+      const vy = currentPos.y - lastPos.y
+      const distance = Math.sqrt(vx * vx + vy * vy)
+
+      // Only create trail if mouse is moving (distance > 2px)
+      if (distance > 2) {
+        isMouseMovingRef.current = true
+
+        // Create multiple trail particles between last position and current position
+        const steps = Math.ceil(distance / 8)
+        for (let i = 0; i < steps; i++) {
+          const t = i / steps
+          const particle: TrailParticle = {
+            x: lastPos.x + vx * t,
+            y: lastPos.y + vy * t,
+            createdAt: Date.now(),
+            vx: vx * 0.3,
+            vy: vy * 0.3,
+          }
+          trailParticlesRef.current.push(particle)
+        }
+      } else {
+        isMouseMovingRef.current = false
+      }
+
+      lastMousePosRef.current = currentPos
     }
 
     window.addEventListener("mousemove", handleMouseMove)
@@ -85,7 +179,7 @@ export function Background() {
 
   return (
     <>
-      {/* Stars canvas */}
+      {/* Canvas for stars and cursor trail */}
       <canvas
         ref={canvasRef}
         className="fixed inset-0 pointer-events-none z-0"
@@ -127,23 +221,6 @@ export function Background() {
           />
         ))}
       </div>
-
-      {/* Subtle cursor glow */}
-      <motion.div
-        className="fixed w-32 h-32 rounded-full pointer-events-none z-0"
-        style={{
-          x: mousePosition.x - 64,
-          y: mousePosition.y - 64,
-          background: "radial-gradient(circle, rgba(255, 111, 181, 0.15) 0%, rgba(255, 111, 181, 0) 70%)",
-          filter: "blur(40px)",
-        }}
-        transition={{
-          type: "spring",
-          damping: 30,
-          stiffness: 200,
-          mass: 0.5,
-        }}
-      />
     </>
   )
 }
