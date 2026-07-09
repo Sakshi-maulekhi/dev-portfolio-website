@@ -11,6 +11,15 @@ interface TrailParticle {
   vy: number
 }
 
+interface ShootingStar {
+  x: number
+  y: number
+  endX: number
+  endY: number
+  createdAt: number
+  duration: number
+}
+
 export function Background() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const trailParticlesRef = useRef<TrailParticle[]>([])
@@ -18,6 +27,8 @@ export function Background() {
   const isMouseMovingRef = useRef(false)
   const animationFrameIdRef = useRef<number>(0)
   const isMobileRef = useRef(false)
+  const shootingStarsRef = useRef<ShootingStar[]>([])
+  const lastShootingStarTimeRef = useRef(0)
 
   useEffect(() => {
     // Detect mobile
@@ -49,12 +60,36 @@ export function Background() {
 
     const TRAIL_LIFETIME = 550 // ms
     const TRAIL_WIDTH = 3
+    const SHOOTING_STAR_INTERVAL = 20000 + Math.random() * 10000 // 20-30 seconds
+
+    const createShootingStar = (currentTime: number) => {
+      const startX = Math.random() * canvas.width * 1.5 - canvas.width * 0.25
+      const startY = Math.random() * canvas.height * 0.6 - canvas.height * 0.1
+      const endX = startX + (Math.random() * 400 + 200)
+      const endY = startY + (Math.random() * 300 + 150)
+      const duration = 6000 + Math.random() * 2000 // 6-8 seconds
+
+      shootingStarsRef.current.push({
+        x: startX,
+        y: startY,
+        endX,
+        endY,
+        createdAt: currentTime,
+        duration,
+      })
+    }
 
     const animate = () => {
       ctx.fillStyle = "rgba(5, 5, 16, 1)"
       ctx.fillRect(0, 0, canvas.width, canvas.height)
 
       const currentTime = Date.now()
+
+      // Spawn shooting stars at intervals
+      if (currentTime - lastShootingStarTimeRef.current > SHOOTING_STAR_INTERVAL) {
+        createShootingStar(currentTime)
+        lastShootingStarTimeRef.current = currentTime
+      }
 
       // Draw twinkling stars
       stars.forEach((star) => {
@@ -70,6 +105,61 @@ export function Background() {
         ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2)
         ctx.fill()
       })
+
+      // Draw and update shooting stars
+      const shootingStars = shootingStarsRef.current
+      for (let i = shootingStars.length - 1; i >= 0; i--) {
+        const star = shootingStars[i]
+        const age = currentTime - star.createdAt
+        const progress = age / star.duration
+
+        if (progress >= 1) {
+          shootingStars.splice(i, 1)
+          continue
+        }
+
+        // Ease in-out cubic for smooth travel
+        const easeProgress =
+          progress < 0.5
+            ? 4 * progress * progress * progress
+            : 1 - Math.pow(-2 * progress + 2, 3) / 2
+
+        const currentX = star.x + (star.endX - star.x) * easeProgress
+        const currentY = star.y + (star.endY - star.y) * easeProgress
+
+        // Opacity fades in and out (20-30% peak)
+        const opacity =
+          progress < 0.1
+            ? progress * 2.5 * 0.25
+            : progress > 0.85
+              ? (1 - progress) / 0.15 * 0.25
+              : 0.25
+
+        // Draw shooting star trail
+        const trailLength = 60
+        const trailStartX = currentX - (star.endX - star.x) * 0.1
+        const trailStartY = currentY - (star.endY - star.y) * 0.1
+
+        // Main glow line
+        ctx.strokeStyle = `rgba(255, 111, 181, ${opacity})`
+        ctx.lineWidth = 2
+        ctx.lineCap = "round"
+        ctx.globalCompositeOperation = "lighter"
+        ctx.beginPath()
+        ctx.moveTo(trailStartX, trailStartY)
+        ctx.lineTo(currentX, currentY)
+        ctx.stroke()
+
+        // Lavender inner highlight
+        ctx.strokeStyle = `rgba(192, 132, 252, ${opacity * 0.5})`
+        ctx.lineWidth = 1
+        ctx.beginPath()
+        ctx.moveTo(trailStartX, trailStartY)
+        ctx.lineTo(currentX, currentY)
+        ctx.stroke()
+
+        ctx.globalCompositeOperation = "source-over"
+      }
 
       // Draw and update cursor trail particles
       if (!isMobileRef.current) {
