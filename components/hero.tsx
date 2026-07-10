@@ -69,16 +69,14 @@ export function Hero() {
 
       <div className="relative z-10">
         <div className="max-w-3xl mx-auto px-4 text-center">
-          {/* Name - Premium Typography with reduced line height */}
+          {/* Name - Premium Typography on single line */}
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-6xl md:text-7xl lg:text-8xl font-serif font-bold mb-3 text-balance leading-none"
+            className="text-5xl md:text-6xl lg:text-7xl font-serif font-bold mb-3 text-balance leading-tight"
           >
-            <span className="text-foreground">Sakshi</span>
-            <br className="block mb-1" />
-            <span className="gradient-text hero-glow">Maulekhi</span>
+            Hi, I&apos;m <span className="gradient-text hero-glow">Sakshi Maulekhi</span>
           </motion.h1>
 
           {/* Typewriter Role */}
