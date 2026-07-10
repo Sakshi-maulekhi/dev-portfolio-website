@@ -3,105 +3,126 @@
 import { motion } from "framer-motion"
 import { Github, Linkedin, ExternalLink, Mail } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { useState, useEffect } from "react"
 
 export function Hero() {
+  const [displayedRole, setDisplayedRole] = useState("")
+  const roles = ["Software Developer", "AI Engineer", "Full Stack Developer", "GenAI Enthusiast"]
+  const [roleIndex, setRoleIndex] = useState(0)
+  const [charIndex, setCharIndex] = useState(0)
+  const [isDeleting, setIsDeleting] = useState(false)
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      const currentRole = roles[roleIndex]
+      
+      if (!isDeleting) {
+        if (charIndex < currentRole.length) {
+          setDisplayedRole(currentRole.substring(0, charIndex + 1))
+          setCharIndex(charIndex + 1)
+        } else {
+          setTimeout(() => setIsDeleting(true), 2000)
+        }
+      } else {
+        if (charIndex > 0) {
+          setDisplayedRole(currentRole.substring(0, charIndex - 1))
+          setCharIndex(charIndex - 1)
+        } else {
+          setIsDeleting(false)
+          setRoleIndex((roleIndex + 1) % roles.length)
+        }
+      }
+    }, isDeleting ? 50 : 100)
+
+    return () => clearTimeout(timeout)
+  }, [charIndex, roleIndex, isDeleting, roles])
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-grid pt-20">
-      {/* Animated gradient blobs - Pink and Lavender */}
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-grid">
+      {/* Animated gradient blobs - Pink and Lavender - Softer and larger */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
           animate={{ 
-            x: [0, 30, -30, 0],
+            x: [0, 50, -50, 0],
+            y: [0, -40, 40, 0],
+          }}
+          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-1/4 -left-48 w-full max-w-2xl h-96 bg-pink-400 rounded-full mix-blend-multiply filter blur-3xl opacity-5"
+        />
+        <motion.div
+          animate={{ 
+            x: [0, -50, 50, 0],
+            y: [0, 40, -40, 0],
+          }}
+          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          className="absolute top-1/3 -right-48 w-full max-w-2xl h-96 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl opacity-5"
+        />
+        <motion.div
+          animate={{ 
+            x: [0, 40, -40, 0],
             y: [0, -30, 30, 0],
           }}
-          transition={{ duration: 8, repeat: Infinity }}
-          className="absolute top-1/4 -left-32 w-96 h-96 bg-pink-400 rounded-full mix-blend-multiply filter blur-3xl opacity-15 glow-circle"
-        />
-        <motion.div
-          animate={{ 
-            x: [0, -30, 30, 0],
-            y: [0, 30, -30, 0],
-          }}
-          transition={{ duration: 10, repeat: Infinity, delay: 1 }}
-          className="absolute top-1/3 -right-32 w-96 h-96 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl opacity-15 glow-circle"
-        />
-        <motion.div
-          animate={{ 
-            x: [0, 20, -20, 0],
-            y: [0, -20, 20, 0],
-          }}
-          transition={{ duration: 12, repeat: Infinity, delay: 2 }}
-          className="absolute -bottom-32 left-1/3 w-96 h-96 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-10 glow-circle"
+          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut", delay: 4 }}
+          className="absolute -bottom-32 left-1/3 w-full max-w-2xl h-96 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-3"
         />
       </div>
 
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-4xl mx-auto text-center">
-          {/* Greeting */}
-          <motion.div
+      <div className="relative z-10">
+        <div className="max-w-3xl mx-auto px-4 text-center">
+          {/* Name - Premium Typography with reduced line height */}
+          <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="mb-4"
-          >
-            <span className="inline-block px-4 py-2 rounded-full glass text-sm text-muted-foreground">
-              Welcome to my portfolio
-            </span>
-          </motion.div>
-
-          {/* Name - Premium Typography */}
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold mb-4 text-balance leading-tight"
+            transition={{ duration: 0.8 }}
+            className="text-6xl md:text-7xl lg:text-8xl font-serif font-bold mb-3 text-balance leading-none"
           >
             <span className="text-foreground">Sakshi</span>
-            <br />
-            <span className="gradient-text glow-text">Maulekhi</span>
+            <br className="block mb-1" />
+            <span className="gradient-text hero-glow">Maulekhi</span>
           </motion.h1>
 
-          {/* Title */}
+          {/* Typewriter Role */}
           <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-xl md:text-2xl text-muted-foreground mb-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-lg md:text-xl text-muted-foreground mb-8 h-7 min-h-7"
           >
-            Full Stack Developer | Problem Solver
+            {displayedRole}
+            <span className="animate-pulse">|</span>
           </motion.h2>
 
           {/* Description */}
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="text-muted-foreground text-lg max-w-2xl mx-auto mb-8 text-pretty"
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto mb-10 text-pretty leading-relaxed"
           >
             I build modern full-stack web applications with beautiful UI, real-time features, and scalable backend systems.
           </motion.p>
 
-          {/* CTA Buttons - Glassmorphism */}
+          {/* CTA Buttons - Premium Glassmorphism with pill shape */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="flex flex-wrap justify-center gap-4 mb-8"
+            className="flex flex-wrap justify-center gap-4 mb-12"
           >
             <motion.button
-              whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(255, 111, 181, 0.4)" }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.98 }}
               onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-              className="glass-pink px-8 py-3 rounded-xl font-medium text-foreground transition-all border border-pink-400/30 hover:border-pink-400/60 backdrop-blur-md"
+              className="px-8 py-3 rounded-full font-medium text-foreground bg-pink-500/20 border border-pink-400/40 hover:border-pink-400/70 hover:bg-pink-500/30 transition-all backdrop-blur-md shadow-lg hover:shadow-pink-500/20"
             >
               <ExternalLink className="inline mr-2 h-4 w-4" />
               View Projects
             </motion.button>
             <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.98 }}
               onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-              className="glass px-8 py-3 rounded-xl font-medium text-foreground border border-white/10 hover:border-pink-400/40 transition-all"
+              className="px-8 py-3 rounded-full font-medium text-foreground bg-white/5 border border-white/20 hover:border-white/40 hover:bg-white/10 transition-all backdrop-blur-md"
             >
               <Mail className="inline mr-2 h-4 w-4" />
               Contact Me

@@ -60,14 +60,18 @@ export function Background() {
 
     const TRAIL_LIFETIME = 550 // ms
     const TRAIL_WIDTH = 3
-    const SHOOTING_STAR_INTERVAL = 20000 + Math.random() * 10000 // 20-30 seconds
+    const SHOOTING_STAR_INTERVAL = 25000 + Math.random() * 15000 // 25-40 seconds (rarer)
+    const MAX_SHOOTING_STARS = 2 // Only 2-3 visible at a time
 
     const createShootingStar = (currentTime: number) => {
-      const startX = Math.random() * canvas.width * 1.5 - canvas.width * 0.25
-      const startY = Math.random() * canvas.height * 0.6 - canvas.height * 0.1
-      const endX = startX + (Math.random() * 400 + 200)
-      const endY = startY + (Math.random() * 300 + 150)
-      const duration = 6000 + Math.random() * 2000 // 6-8 seconds
+      // Only create if we haven't hit the max
+      if (shootingStarsRef.current.length >= MAX_SHOOTING_STARS) return
+      
+      const startX = Math.random() * canvas.width * 1.2 - canvas.width * 0.1
+      const startY = Math.random() * canvas.height * 0.5
+      const endX = startX + (Math.random() * 600 + 300)
+      const endY = startY + (Math.random() * 400 + 200)
+      const duration = 4000 + Math.random() * 4000 // 4-8 seconds
 
       shootingStarsRef.current.push({
         x: startX,
@@ -127,22 +131,21 @@ export function Background() {
         const currentX = star.x + (star.endX - star.x) * easeProgress
         const currentY = star.y + (star.endY - star.y) * easeProgress
 
-        // Opacity fades in and out (20-30% peak)
+        // Opacity fades in and out (20-25% peak)
         const opacity =
-          progress < 0.1
-            ? progress * 2.5 * 0.25
-            : progress > 0.85
-              ? (1 - progress) / 0.15 * 0.25
-              : 0.25
+          progress < 0.12
+            ? progress * 2 * 0.2
+            : progress > 0.88
+              ? (1 - progress) / 0.12 * 0.2
+              : 0.2
 
-        // Draw shooting star trail
-        const trailLength = 60
-        const trailStartX = currentX - (star.endX - star.x) * 0.1
-        const trailStartY = currentY - (star.endY - star.y) * 0.1
+        // Draw shooting star trail - elegant white with soft glow
+        const trailStartX = currentX - (star.endX - star.x) * 0.15
+        const trailStartY = currentY - (star.endY - star.y) * 0.15
 
-        // Main glow line
-        ctx.strokeStyle = `rgba(255, 111, 181, ${opacity})`
-        ctx.lineWidth = 2
+        // Main white glow line (thin and elegant)
+        ctx.strokeStyle = `rgba(255, 255, 255, ${opacity * 0.8})`
+        ctx.lineWidth = 1.5
         ctx.lineCap = "round"
         ctx.globalCompositeOperation = "lighter"
         ctx.beginPath()
@@ -150,9 +153,9 @@ export function Background() {
         ctx.lineTo(currentX, currentY)
         ctx.stroke()
 
-        // Lavender inner highlight
-        ctx.strokeStyle = `rgba(192, 132, 252, ${opacity * 0.5})`
-        ctx.lineWidth = 1
+        // Soft glow (slightly thicker for bloom effect)
+        ctx.strokeStyle = `rgba(255, 255, 255, ${opacity * 0.3})`
+        ctx.lineWidth = 3
         ctx.beginPath()
         ctx.moveTo(trailStartX, trailStartY)
         ctx.lineTo(currentX, currentY)
