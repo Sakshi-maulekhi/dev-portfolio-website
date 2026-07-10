@@ -37,65 +37,75 @@ export function Hero() {
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
+          {/* Greeting */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="mb-4"
+          >
+            <span className="inline-block px-4 py-2 rounded-full glass text-sm text-muted-foreground">
+              Welcome to my portfolio
+            </span>
+          </motion.div>
+
           {/* Name - Premium Typography */}
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 text-balance leading-tight"
+            className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold mb-4 text-balance leading-tight"
           >
-            Hi, I&apos;m <span className="gradient-text glow-text">Saumya Singh</span>
+            <span className="text-foreground">Sakshi</span>
+            <br />
+            <span className="gradient-text glow-text">Maulekhi</span>
           </motion.h1>
 
-          {/* Description with rich text */}
-          <motion.div
+          {/* Title */}
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-muted-foreground text-base md:text-lg max-w-3xl mx-auto mb-8 space-y-4 text-pretty leading-relaxed"
+            className="text-xl md:text-2xl text-muted-foreground mb-6"
           >
-            <p>
-              A girl who codes with <span className="font-bold text-foreground">curiosity</span>, designs with <span className="font-bold text-foreground">heart</span>, and builds with <span className="font-bold text-foreground">purpose</span>.
-            </p>
-            <p>
-              I blend <span className="font-bold text-foreground">logic</span>, <span className="font-bold text-foreground">creativity</span>, and ✨<span className="font-bold text-pink-300">just the right amount of pink</span>✨ to bring ideas to life — from sleek UI to scalable backend systems.
-            </p>
-            <p>
-              With expertise in the <span className="font-bold text-foreground">MERN stack</span> and a love for <span className="font-bold text-foreground">problem-solving in C++</span>, I&apos;ve tackled over <span className="font-bold text-foreground">500+ LeetCode problems</span> and enjoy turning concepts into clean, efficient code.
-            </p>
-            <p>
-              The journey has just begun — learning every day, building with love, and I can&apos;t wait to see where code takes me. ✨
-            </p>
-            <p className="italic text-pink-300 mt-6">
-              "Building with logic, designing with love." 💖
-            </p>
-          </motion.div>
+            Full Stack Developer | Problem Solver
+          </motion.h2>
 
-          {/* CTA Button */}
+          {/* Description */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="text-muted-foreground text-lg max-w-2xl mx-auto mb-8 text-pretty"
+          >
+            I build modern full-stack web applications with beautiful UI, real-time features, and scalable backend systems.
+          </motion.p>
+
+          {/* CTA Buttons - Glassmorphism */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="mb-8"
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="flex flex-wrap justify-center gap-4 mb-8"
           >
+            <motion.button
+              whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(255, 111, 181, 0.4)" }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+              className="glass-pink px-8 py-3 rounded-xl font-medium text-foreground transition-all border border-pink-400/30 hover:border-pink-400/60 backdrop-blur-md"
+            >
+              <ExternalLink className="inline mr-2 h-4 w-4" />
+              View Projects
+            </motion.button>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-              className="px-8 py-3 rounded-full font-semibold bg-pink-600 hover:bg-pink-700 text-white transition-all"
+              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+              className="glass px-8 py-3 rounded-xl font-medium text-foreground border border-white/10 hover:border-pink-400/40 transition-all"
             >
-              View My Work
+              <Mail className="inline mr-2 h-4 w-4" />
+              Contact Me
             </motion.button>
-          </motion.div>
-
-          {/* Scroll text */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-            className="text-muted-foreground text-sm mb-4"
-          >
-            Scroll
           </motion.div>
 
           {/* Social Links */}
