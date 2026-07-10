@@ -2,14 +2,13 @@
 
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X } from "lucide-react"
+import { Menu, X, Sun } from "lucide-react"
 
 const navLinks = [
+  { name: "Home", href: "#" },
   { name: "About", href: "#about" },
   { name: "Skills", href: "#skills" },
   { name: "Projects", href: "#projects" },
-  { name: "Achievements", href: "#achievements" },
-  { name: "Certifications", href: "#certifications" },
   { name: "Contact", href: "#contact" },
 ]
 
@@ -64,10 +63,10 @@ export function Navbar() {
         <div className="container mx-auto px-4 flex items-center justify-between">
           <motion.a
             href="#"
-            className="text-xl font-bold gradient-text"
+            className="text-lg font-bold"
             whileHover={{ scale: 1.05 }}
           >
-            SM
+            <span className="text-foreground">Saumya&apos;s</span> <span className="gradient-text">Portfolio</span>
           </motion.a>
 
           {/* Desktop Navigation */}
@@ -92,6 +91,12 @@ export function Navbar() {
                 )}
               </motion.a>
             ))}
+            <motion.div
+              whileHover={{ scale: 1.1, rotate: 20 }}
+              className="text-yellow-400 cursor-pointer"
+            >
+              <Sun size={24} />
+            </motion.div>
           </div>
 
           {/* Mobile Menu Button */}
