@@ -1,15 +1,16 @@
 "use client"
 
 import { motion, useInView } from "framer-motion"
-import { Cloud, Database, Layers, Workflow } from "lucide-react"
+import { Bug, Cloud, Code2, GitBranch, Laptop, Sparkles } from "lucide-react"
 import { useRef } from "react"
 
 const responsibilities = [
+  { icon: Code2, label: "TypeScript" },
+  { icon: Sparkles, label: "AI-Assisted Development" },
+  { icon: Laptop, label: "Cursor / GitHub Copilot" },
+  { icon: Bug, label: "Testing & Debugging" },
+  { icon: GitBranch, label: "Git & GitHub" },
   { icon: Cloud, label: "Cloudflare Workers" },
-  { icon: Database, label: "D1" },
-  { icon: Layers, label: "Queues" },
-  { icon: Workflow, label: "Serverless workflows" },
-  { icon: Workflow, label: "Form processing" },
 ]
 
 export function Experience() {
@@ -40,12 +41,14 @@ export function Experience() {
             <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-3 mb-6">
               <div>
                 <h3 className="text-2xl font-serif font-bold text-pink-100">AI Engineering Intern</h3>
-                <p className="text-muted-foreground mt-1">RadialBrain</p>
+                <p className="text-muted-foreground mt-1">
+                  RadialBrain <span className="text-muted-foreground/70">· Remote</span>
+                </p>
               </div>
               <span className="text-sm text-pink-200/80">Serverless engineering</span>
             </div>
             <p className="text-muted-foreground leading-relaxed mb-6">
-              Worked on serverless workflows and form processing using Cloudflare Workers, D1, and Queues.
+              Worked on product development, AI-assisted coding, testing, debugging, and serverless workflows.
             </p>
             <div className="flex flex-wrap gap-3">
               {responsibilities.map(({ icon: Icon, label }) => (
