@@ -63,7 +63,7 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto mb-10 text-pretty leading-relaxed"
           >
-            I build practical AI applications and automation workflows using LLMs, RAG, AI agents, and modern development tools.
+            I build practical AI applications, automation workflows, and software projects using LLMs, RAG, AI agents, and modern development tools.
           </motion.p>
 
           {/* CTA Buttons - Premium Glassmorphism with pill shape */}
