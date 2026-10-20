@@ -3,7 +3,35 @@
 import { motion } from "framer-motion"
 import { Github, Linkedin, ExternalLink, Mail } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { useEffect, useState } from "react"
+
 export function Hero() {
+  const roles = ["Software Developer", "GenAI Developer", "AI Automation Developer", "AI Engineer"]
+  const [roleIndex, setRoleIndex] = useState(0)
+  const [displayedRole, setDisplayedRole] = useState("")
+  const [isDeleting, setIsDeleting] = useState(false)
+
+  useEffect(() => {
+    const currentRole = roles[roleIndex]
+    const delay = isDeleting ? 50 : displayedRole.length === currentRole.length ? 1800 : 100
+    const timeout = window.setTimeout(() => {
+      if (!isDeleting) {
+        if (displayedRole.length < currentRole.length) {
+          setDisplayedRole(currentRole.slice(0, displayedRole.length + 1))
+        } else {
+          setIsDeleting(true)
+        }
+      } else if (displayedRole.length > 0) {
+        setDisplayedRole(currentRole.slice(0, displayedRole.length - 1))
+      } else {
+        setIsDeleting(false)
+        setRoleIndex((index) => (index + 1) % roles.length)
+      }
+    }, delay)
+
+    return () => window.clearTimeout(timeout)
+  }, [displayedRole, isDeleting, roleIndex])
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-grid">
       {/* Animated gradient blobs - Pink and Lavender - Softer and larger */}
@@ -53,7 +81,8 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-lg md:text-xl text-muted-foreground mb-8 h-7 min-h-7"
           >
-            AI Generalist | GenAI &amp; AI Automation
+            {displayedRole}
+            <span className="animate-pulse" aria-hidden="true">|</span>
           </motion.h2>
 
           {/* Description */}
