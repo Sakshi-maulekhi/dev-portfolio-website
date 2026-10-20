@@ -20,6 +20,21 @@ interface ShootingStar {
   duration: number
 }
 
+const floatingParticles = Array.from({ length: 12 }, (_, index) => {
+  const seed = index + 1
+
+  return {
+    width: 20 + ((seed * 37) % 60),
+    height: 20 + ((seed * 53) % 60),
+    left: `${(seed * 29) % 100}%`,
+    top: `${(seed * 47) % 100}%`,
+    y: ((seed * 17) % 101) - 50,
+    x: ((seed * 31) % 101) - 50,
+    duration: 20 + ((seed * 13) % 15),
+    delay: (seed * 7) % 5,
+  }
+})
+
 export function Background() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const trailParticlesRef = useRef<TrailParticle[]>([])
@@ -280,27 +295,11 @@ export function Background() {
 
       {/* Floating particles */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        {Array.from({ length: 12 }).map((_, i) => (
+        {floatingParticles.map((particle, i) => (
           <motion.div
             key={`particle-${i}`}
-            style={{
-              width: Math.random() * 60 + 20,
-              height: Math.random() * 60 + 20,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, Math.random() * 100 - 50],
-              x: [0, Math.random() * 100 - 50],
-              opacity: [0.05, 0.2, 0.05],
-            }}
-            transition={{
-              duration: Math.random() * 15 + 20,
-              repeat: Infinity,
-              ease: "linear",
-              delay: Math.random() * 5,
-            }}
             className={`
+              absolute rounded-full blur-3xl
               ${
                 i % 3 === 0
                   ? "bg-pink-400"
@@ -308,8 +307,24 @@ export function Background() {
                     ? "bg-purple-400"
                     : "bg-white"
               }
-              blur-3xl
             `}
+            style={{
+              width: particle.width,
+              height: particle.height,
+              left: particle.left,
+              top: particle.top,
+            }}
+            animate={{
+              y: [0, particle.y],
+              x: [0, particle.x],
+              opacity: [0.05, 0.2, 0.05],
+            }}
+            transition={{
+              duration: particle.duration,
+              repeat: Infinity,
+              ease: "linear",
+              delay: particle.delay,
+            }}
           />
         ))}
       </div>
