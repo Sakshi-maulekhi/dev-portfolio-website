@@ -49,13 +49,13 @@ export function About() {
               className="space-y-4"
             >
               <p className="text-muted-foreground leading-relaxed">
-                I&apos;m a <span className="text-foreground font-medium">B.Tech IT student</span> at ABES Engineering College, passionate about building modern web applications that solve real-world problems.
+                I&apos;m a <span className="text-foreground font-medium">B.Tech IT student</span> passionate about building practical AI applications, GenAI solutions, and automation workflows that solve real-world problems.
               </p>
               <p className="text-muted-foreground leading-relaxed">
-                My journey in tech started with curiosity about how things work, and has evolved into a deep passion for <span className="text-foreground font-medium">full-stack development</span>, <span className="text-foreground font-medium">problem solving</span>, and <span className="text-foreground font-medium">modern UI engineering</span>.
+                {"My work combines "}<span className="text-foreground font-medium">LLMs, RAG, AI agents, prompt engineering, and workflow automation</span>{" with software development. I&apos;ve built AI-powered customer support, document processing, social media automation, and RAG applications."}
               </p>
               <p className="text-muted-foreground leading-relaxed">
-                I&apos;m particularly interested in building scalable applications, real-time systems, and AI-powered products that push the boundaries of what&apos;s possible on the web.
+                I also enjoy building complete software products, including real-time collaborative applications, which gives me a strong foundation for turning AI ideas into working products.
               </p>
             </motion.div>
 
@@ -69,17 +69,17 @@ export function About() {
               <AboutCard
                 icon={<GraduationCap className="w-5 h-5" />}
                 title="Education"
-                description="B.Tech in Information Technology at ABES Engineering College"
+                description="B.Tech in Information Technology · ABES Engineering College"
               />
               <AboutCard
                 icon={<Code className="w-5 h-5" />}
                 title="Focus Areas"
-                description="Full-Stack Development, Real-time Systems, Scalable Architecture"
+                description="GenAI, AI Automation, RAG, AI Agents"
               />
               <AboutCard
                 icon={<Sparkles className="w-5 h-5" />}
                 title="Interests"
-                description="AI-powered Products, Modern UI/UX, Open Source"
+                description="AI Products, Workflow Automation, LLM Applications"
               />
             </motion.div>
           </div>

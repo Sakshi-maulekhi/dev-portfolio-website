@@ -7,20 +7,44 @@ import { Button } from "@/components/ui/button"
 
 const projects = [
   {
-    title: "PropertyHub",
-    description: "A full-stack real estate platform with authentication, CRUD operations, advanced property search/filtering, saved properties, and real-time chat using Socket.io.",
-    tech: ["React.js", "Tailwind CSS", "Node.js", "Express.js", "MongoDB", "Prisma", "Socket.io"],
-    github: "https://github.com/Sakshi-maulekhi/Real-Estate",
-    demo: "https://real-estate-neon-psi.vercel.app/",
-    image: "/projects/propertyhub.jpg",
+    title: "Customer Support AI Agent",
+    description: "AI support agent that classifies customer emails, retrieves relevant knowledge, and generates automated replies.",
+    highlight: "Pinecone-based RAG + Ollama + n8n",
+    tech: ["n8n", "AI Agents", "RAG", "Pinecone", "Ollama", "Gmail"],
+    github: "https://github.com/Sakshi-maulekhi/ai-automation-workflows",
+    demo: "https://github.com/Sakshi-maulekhi/ai-automation-workflows",
+  },
+  {
+    title: "Social Media Post Agent",
+    description: "AI workflow that transforms user topics into social media content and generated images.",
+    highlight: "AI agents + prompt-driven content and image generation",
+    tech: ["n8n", "AI Agents", "Prompt Engineering", "Image Generation"],
+    github: "https://github.com/Sakshi-maulekhi/ai-automation-workflows",
+    demo: "https://github.com/Sakshi-maulekhi/ai-automation-workflows",
+  },
+  {
+    title: "Invoice Parser",
+    description: "Automated document-processing workflow that extracts structured information from invoice PDFs.",
+    highlight: "LLM-based information extraction + workflow automation",
+    tech: ["n8n", "LLMs", "PDF Processing", "Google Drive", "Google Sheets"],
+    github: "https://github.com/Sakshi-maulekhi/ai-automation-workflows",
+    demo: "https://github.com/Sakshi-maulekhi/ai-automation-workflows",
+  },
+  {
+    title: "DocQuery AI",
+    description: "Production-style RAG PDF assistant for uploading documents and asking natural-language questions.",
+    highlight: "LangChain + Qdrant + Ollama + FastAPI",
+    tech: ["Python", "FastAPI", "React.js", "LangChain", "Qdrant", "Ollama"],
+    github: "https://github.com/Sakshi-maulekhi/DocQuery-AI",
+    demo: "https://github.com/Sakshi-maulekhi/DocQuery-AI",
   },
   {
     title: "CodeSync",
-    description: "A real-time collaborative coding platform with room-based coding sessions, live code sharing, coding dashboard, and integrated browser IDE.",
-    tech: ["React.js", "Tailwind CSS", "Node.js", "Express.js", "MongoDB", "Socket.io"],
+    description: "Real-time collaborative coding platform with room-based code sharing and an interactive Monaco editor.",
+    highlight: "End-to-end full-stack application + real-time collaboration",
+    tech: ["React.js", "Node.js", "Express.js", "MongoDB", "Socket.io"],
     github: "https://github.com/Sakshi-maulekhi/CodeSync-Live",
     demo: "https://code-sync-live-jrnx.vercel.app/",
-    image: "/projects/codesync.jpg",
   },
 ]
 
@@ -58,7 +82,7 @@ export function Projects() {
           </div>
 
           {/* Projects Grid */}
-          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
             {projects.map((project, index) => (
               <ProjectCard key={project.title} project={project} index={index} isInView={isInView} />
             ))}
@@ -140,9 +164,10 @@ function ProjectCard({ project, index, isInView }: {
             </h3>
             <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-pink-300 group-hover:translate-x-1 transition-all" />
           </div>
-          <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
+          <p className="text-muted-foreground text-sm mb-3 leading-relaxed">
             {project.description}
           </p>
+          <p className="text-xs font-medium text-pink-200/90 mb-4">{project.highlight}</p>
           <div className="flex flex-wrap gap-2">
             {project.tech.map((tech) => (
               <span

@@ -283,7 +283,6 @@ export function Background() {
         {Array.from({ length: 12 }).map((_, i) => (
           <motion.div
             key={`particle-${i}`}
-            className="absolute rounded-full"
             style={{
               width: Math.random() * 60 + 20,
               height: Math.random() * 60 + 20,

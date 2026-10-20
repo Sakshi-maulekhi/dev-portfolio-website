@@ -6,6 +6,12 @@ import { Trophy, Code, Users, Award } from "lucide-react"
 
 const achievements = [
   {
+    icon: <Award className="w-6 h-6" />,
+    stat: "2026",
+    label: "Women Who Master GenAI",
+    description: "Zonal Round Qualifier — Logitech × Aspire For Her",
+  },
+  {
     icon: <Code className="w-6 h-6" />,
     stat: "350+",
     label: "LeetCode Problems",
@@ -14,20 +20,14 @@ const achievements = [
   {
     icon: <Trophy className="w-6 h-6" />,
     stat: "1600+",
-    label: "LeetCode Rating",
-    description: "Competitive programming rating",
+    label: "Contest Rating",
+    description: "LeetCode competitive programming rating",
   },
   {
     icon: <Users className="w-6 h-6" />,
     stat: "GSSoC '24",
     label: "Open Source",
     description: "Contributor at GirlScript Summer of Code",
-  },
-  {
-    icon: <Award className="w-6 h-6" />,
-    stat: "Flipkart GRiD 7.0",
-    
-    description: "Shortlisted in flagship engineering campus challenge",
   },
 ]
 

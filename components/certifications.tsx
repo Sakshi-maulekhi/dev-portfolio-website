@@ -6,18 +6,13 @@ import { BadgeCheck, ExternalLink } from "lucide-react"
 
 const certifications = [
   {
-    title: "Problem Solving Intermediate",
-    issuer: "HackerRank",
-    link: "#",
-  },
-  {
-    title: "Prompt Engineering with GitHub Copilot",
-    issuer: "GitHub",
-    link: "#",
-  },
-  {
     title: "AWS Foundations: Cloud Essentials",
     issuer: "Amazon Web Services",
+    link: "#",
+  },
+  {
+    title: "Introduction to Prompt Engineering with GitHub Copilot",
+    issuer: "Microsoft & Simplilearn",
     link: "#",
   },
 ]

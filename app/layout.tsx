@@ -8,8 +8,8 @@ const poppins = Poppins({ subsets: ["latin"], weight: ["400", "500", "600", "700
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'Sakshi Maulekhi | Full Stack Developer',
-  description: 'Full Stack Developer specializing in modern web applications with beautiful UI, real-time features, and scalable backend systems.',
+  title: 'Sakshi Maulekhi | AI Generalist',
+  description: 'AI Generalist building practical GenAI applications, RAG systems, AI agents, and automation workflows.',
   generator: 'v0.app',
   icons: {
     icon: [

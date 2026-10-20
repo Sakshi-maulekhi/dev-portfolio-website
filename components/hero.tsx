@@ -3,40 +3,7 @@
 import { motion } from "framer-motion"
 import { Github, Linkedin, ExternalLink, Mail } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { useState, useEffect } from "react"
-
 export function Hero() {
-  const [displayedRole, setDisplayedRole] = useState("")
-  const roles = ["Software Developer", "AI Engineer", "Full Stack Developer", "GenAI Enthusiast"]
-  const [roleIndex, setRoleIndex] = useState(0)
-  const [charIndex, setCharIndex] = useState(0)
-  const [isDeleting, setIsDeleting] = useState(false)
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      const currentRole = roles[roleIndex]
-      
-      if (!isDeleting) {
-        if (charIndex < currentRole.length) {
-          setDisplayedRole(currentRole.substring(0, charIndex + 1))
-          setCharIndex(charIndex + 1)
-        } else {
-          setTimeout(() => setIsDeleting(true), 2000)
-        }
-      } else {
-        if (charIndex > 0) {
-          setDisplayedRole(currentRole.substring(0, charIndex - 1))
-          setCharIndex(charIndex - 1)
-        } else {
-          setIsDeleting(false)
-          setRoleIndex((roleIndex + 1) % roles.length)
-        }
-      }
-    }, isDeleting ? 50 : 100)
-
-    return () => clearTimeout(timeout)
-  }, [charIndex, roleIndex, isDeleting, roles])
-
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-grid">
       {/* Animated gradient blobs - Pink and Lavender - Softer and larger */}
@@ -86,8 +53,7 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-lg md:text-xl text-muted-foreground mb-8 h-7 min-h-7"
           >
-            {displayedRole}
-            <span className="animate-pulse">|</span>
+            AI Generalist | GenAI &amp; AI Automation
           </motion.h2>
 
           {/* Description */}
@@ -97,7 +63,7 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto mb-10 text-pretty leading-relaxed"
           >
-            I build modern full-stack web applications with beautiful UI, real-time features, and scalable backend systems.
+            I build practical AI applications and automation workflows using LLMs, RAG, AI agents, and modern development tools.
           </motion.p>
 
           {/* CTA Buttons - Premium Glassmorphism with pill shape */}
