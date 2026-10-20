@@ -17,7 +17,7 @@ export function Experience() {
   const isInView = useInView(ref, { once: true, margin: "-100px" })
 
   return (
-    <section className="py-24 relative">
+    <section id="experience" className="py-24 relative scroll-mt-24">
       <div className="container mx-auto px-4">
         <motion.div
           ref={ref}
