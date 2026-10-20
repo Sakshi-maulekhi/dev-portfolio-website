@@ -35,13 +35,13 @@ export function Hero() {
       </div>
 
       <div className="relative z-10">
-        <div className="max-w-3xl mx-auto px-4 text-center">
+        <div className="w-full max-w-3xl md:max-w-none mx-auto px-4 text-center">
           {/* Name - Premium Typography on single line */}
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-5xl md:text-6xl lg:text-7xl font-serif font-bold mb-3 text-balance leading-tight"
+            className="text-5xl md:text-6xl lg:text-7xl font-serif font-bold mb-3 leading-tight md:whitespace-nowrap"
           >
             Hi, I&apos;m <span className="gradient-text hero-glow">Sakshi Maulekhi</span>
           </motion.h1>
