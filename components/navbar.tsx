@@ -77,11 +77,17 @@ export function Navbar() {
               <motion.a
                 key={link.name}
                 href={link.href}
+                onClick={(event) => {
+                  event.preventDefault()
+                  const sectionId = link.href.substring(1)
+                  setActiveSection(sectionId)
+                  document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" })
+                }}
                 className={`text-sm transition-colors relative ${
                   activeSection === link.href.substring(1)
                     ? "text-primary"
                     : "text-muted-foreground hover:text-foreground"
-                }`}
+                }}`
                 whileHover={{ y: -2 }}
               >
                 {link.name}
@@ -122,8 +128,14 @@ export function Navbar() {
                       activeSection === link.href.substring(1)
                         ? "text-primary"
                         : "text-muted-foreground"
-                    }`}
-                    onClick={() => setIsMobileMenuOpen(false)}
+                    }}`
+                    onClick={(event) => {
+                      event.preventDefault()
+                      const sectionId = link.href.substring(1)
+                      setActiveSection(sectionId)
+                      setIsMobileMenuOpen(false)
+                      document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" })
+                    }}
                   >
                     {link.name}
                   </a>
