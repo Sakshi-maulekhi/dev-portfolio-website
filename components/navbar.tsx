@@ -87,7 +87,7 @@ export function Navbar() {
                   activeSection === link.href.substring(1)
                     ? "text-primary"
                     : "text-muted-foreground hover:text-foreground"
-                }}`
+                }`}
                 whileHover={{ y: -2 }}
               >
                 {link.name}
@@ -128,7 +128,7 @@ export function Navbar() {
                       activeSection === link.href.substring(1)
                         ? "text-primary"
                         : "text-muted-foreground"
-                    }}`
+                    }`}
                     onClick={(event) => {
                       event.preventDefault()
                       const sectionId = link.href.substring(1)
