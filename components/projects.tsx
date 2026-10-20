@@ -3,54 +3,106 @@
 import { motion, useInView } from "framer-motion"
 import { useRef, useState } from "react"
 import { ExternalLink, Github, ChevronRight } from "lucide-react"
-import { Button } from "@/components/ui/button"
+type ProjectCategory = "AI / GenAI / AI Automation" | "Full Stack"
 
-const projects = [
+type Project = {
+  title: string
+  description: string
+  highlight: string
+  tech: string[]
+  github: string
+  demo?: string
+  category: ProjectCategory
+  featured?: boolean
+}
+
+const projects: Project[] = [
   {
     title: "Customer Support AI Agent",
     description: "AI support agent that classifies customer emails, retrieves relevant knowledge, and generates automated replies.",
-    highlight: "Pinecone-based RAG + Ollama + n8n",
+    highlight: "Pinecone-based RAG · Ollama · n8n · AI Agents",
     tech: ["n8n", "AI Agents", "RAG", "Pinecone", "Ollama", "Gmail"],
     github: "https://github.com/Sakshi-maulekhi/ai-automation-workflows",
-    demo: "https://github.com/Sakshi-maulekhi/ai-automation-workflows",
+    category: "AI / GenAI / AI Automation",
+    featured: true,
   },
   {
     title: "Social Media Post Agent",
     description: "AI workflow that transforms user topics into social media content and generated images.",
-    highlight: "AI agents + prompt-driven content and image generation",
+    highlight: "AI Agents · Prompt Engineering · Image Generation · n8n",
     tech: ["n8n", "AI Agents", "Prompt Engineering", "Image Generation"],
     github: "https://github.com/Sakshi-maulekhi/ai-automation-workflows",
-    demo: "https://github.com/Sakshi-maulekhi/ai-automation-workflows",
+    category: "AI / GenAI / AI Automation",
   },
   {
     title: "Invoice Parser",
     description: "Automated document-processing workflow that extracts structured information from invoice PDFs.",
-    highlight: "LLM-based information extraction + workflow automation",
+    highlight: "LLM Information Extraction · PDF Processing · Google Sheets",
     tech: ["n8n", "LLMs", "PDF Processing", "Google Drive", "Google Sheets"],
     github: "https://github.com/Sakshi-maulekhi/ai-automation-workflows",
-    demo: "https://github.com/Sakshi-maulekhi/ai-automation-workflows",
+    category: "AI / GenAI / AI Automation",
   },
   {
-    title: "DocQuery AI",
+    title: "RAG Chatbot",
+    description: "Document-grounded chatbot that retrieves relevant information from a knowledge base to answer user queries.",
+    highlight: "RAG · Embeddings · Vector Search · Ollama",
+    tech: ["n8n", "RAG", "Ollama", "Vector Database", "Embeddings"],
+    github: "https://github.com/Sakshi-maulekhi/ai-automation-workflows",
+    category: "AI / GenAI / AI Automation",
+  },
+  {
+    title: "DocQuery AI – Production RAG PDF Assistant",
     description: "Production-style RAG PDF assistant for uploading documents and asking natural-language questions.",
-    highlight: "LangChain + Qdrant + Ollama + FastAPI",
+    highlight: "LangChain · Qdrant · Ollama · FastAPI",
     tech: ["Python", "FastAPI", "React.js", "LangChain", "Qdrant", "Ollama"],
     github: "https://github.com/Sakshi-maulekhi/DocQuery-AI",
-    demo: "https://github.com/Sakshi-maulekhi/DocQuery-AI",
+    category: "AI / GenAI / AI Automation",
+    featured: true,
   },
   {
-    title: "CodeSync",
+    title: "CodeSync – Real-Time Collaborative Coding Platform",
     description: "Real-time collaborative coding platform with room-based code sharing and an interactive Monaco editor.",
-    highlight: "End-to-end full-stack application + real-time collaboration",
+    highlight: "Real-Time Collaboration · Socket.io · Monaco Editor",
     tech: ["React.js", "Node.js", "Express.js", "MongoDB", "Socket.io"],
     github: "https://github.com/Sakshi-maulekhi/CodeSync-Live",
     demo: "https://code-sync-live-jrnx.vercel.app/",
+    category: "Full Stack",
+    featured: true,
+  },
+  {
+    title: "PropertyHub – Full-Stack Real Estate Platform",
+    description: "Full-stack real estate platform with authentication, property search, saved properties, and real-time communication.",
+    highlight: "REST APIs · Authentication · Real-Time Chat · MongoDB",
+    tech: ["React.js", "Tailwind CSS", "Node.js", "Express.js", "MongoDB", "Prisma", "Socket.IO"],
+    github: "https://github.com/Sakshi-maulekhi/Real-Estate",
+    demo: "https://real-estate-neon-psi.vercel.app/",
+    category: "Full Stack",
+  },
+  {
+    title: "JobPortal – AI-Powered Microservices Recruitment Platform",
+    description: "Microservices-based recruitment platform with authentication, event-driven communication, and AI-powered recruitment features.",
+    highlight: "Microservices · Apache Kafka · Redis · AI-Powered Recruitment",
+    tech: ["Node.js", "Express.js", "TypeScript", "PostgreSQL", "Redis", "Apache Kafka", "Docker"],
+    github: "https://github.com/Sakshi-maulekhi/AI-powered-job-portal-with-microservices",
+    category: "Full Stack",
   },
 ]
+
+const filters = ["All", "AI / GenAI / AI Automation", "Full Stack"] as const
+
+type Filter = (typeof filters)[number]
 
 export function Projects() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
+  const [activeFilter, setActiveFilter] = useState<Filter>("All")
+
+  const filteredProjects = activeFilter === "All"
+    ? projects
+    : projects.filter((project) => project.category === activeFilter)
+
+  const featuredProjects = filteredProjects.filter((project) => project.featured)
+  const remainingProjects = filteredProjects.filter((project) => !project.featured)
 
   return (
     <section id="projects" className="py-24 relative">
@@ -81,22 +133,55 @@ export function Projects() {
             </motion.h2>
           </div>
 
-          {/* Projects Grid */}
-          <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            {projects.map((project, index) => (
-              <ProjectCard key={project.title} project={project} index={index} isInView={isInView} />
+          {/* Project Filters */}
+          <div className="flex flex-wrap justify-center gap-2 mb-10" role="tablist" aria-label="Project categories">
+            {filters.map((filter) => (
+              <button
+                key={filter}
+                type="button"
+                role="tab"
+                aria-selected={activeFilter === filter}
+                onClick={() => setActiveFilter(filter)}
+                className={`rounded-full border px-4 py-2 text-sm transition-all ${
+                  activeFilter === filter
+                    ? "border-pink-400/70 bg-pink-400/15 text-pink-100 shadow-[0_0_20px_rgba(255,111,181,0.16)]"
+                    : "border-white/10 bg-white/[0.03] text-muted-foreground hover:border-pink-400/40 hover:text-foreground"
+                }`}
+              >
+                {filter}
+              </button>
             ))}
           </div>
+
+          {/* Featured Projects */}
+          {featuredProjects.length > 0 && (
+            <div className="mb-8">
+              <p className="mb-4 text-center text-xs font-medium uppercase tracking-[0.2em] text-pink-200/70">Featured projects</p>
+              <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                {featuredProjects.map((project, index) => (
+                  <ProjectCard key={project.title} project={project} index={index} isInView={isInView} featured />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Projects Grid */}
+          <motion.div layout className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            {remainingProjects.map((project, index) => (
+              <ProjectCard key={project.title} project={project} index={index} isInView={isInView} />
+            ))}
+          </motion.div>
         </motion.div>
       </div>
     </section>
   )
 }
 
-function ProjectCard({ project, index, isInView }: { 
-  project: typeof projects[0]; 
-  index: number; 
-  isInView: boolean 
+function ProjectCard({ project, index, isInView, featured = false }: {
+  project: Project
+  index: number
+  isInView: boolean
+  featured?: boolean
 }) {
   const [isHovered, setIsHovered] = useState(false)
 
@@ -115,7 +200,11 @@ function ProjectCard({ project, index, isInView }: {
           rotateY: isHovered ? -3 : 0,
         }}
         transition={{ type: "spring", stiffness: 300, damping: 20 }}
-        className="glass rounded-2xl overflow-hidden border border-pink-400/20 hover:border-pink-400/40 transition-all duration-300"
+        className={`glass rounded-2xl overflow-hidden border transition-all duration-300 ${
+          featured
+            ? "border-pink-400/40 shadow-[0_0_28px_rgba(255,111,181,0.12)]"
+            : "border-pink-400/20 hover:border-pink-400/40"
+        }`}
         style={{ transformStyle: "preserve-3d" }}
       >
         {/* Image placeholder with gradient */}
@@ -135,15 +224,17 @@ function ProjectCard({ project, index, isInView }: {
             animate={{ opacity: isHovered ? 1 : 0 }}
             className="absolute inset-0 bg-background/70 backdrop-blur-lg flex items-center justify-center gap-4"
           >
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => window.open(project.demo, '_blank')}
-              className="glass-pink px-4 py-2 rounded-lg font-medium text-sm text-foreground border border-pink-400/40 hover:border-pink-400/70"
-            >
-              <ExternalLink className="inline mr-2 h-3 w-3" />
-              Live Demo
-            </motion.button>
+            {project.demo && (
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => window.open(project.demo, '_blank')}
+                className="glass-pink px-4 py-2 rounded-lg font-medium text-sm text-foreground border border-pink-400/40 hover:border-pink-400/70"
+              >
+                <ExternalLink className="inline mr-2 h-3 w-3" />
+                Live Demo
+              </motion.button>
+            )}
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
