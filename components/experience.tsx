@@ -45,7 +45,7 @@ export function Experience() {
                   RadialBrain <span className="text-muted-foreground/70">· Remote</span>
                 </p>
               </div>
-              <span className="text-sm text-pink-200/80">Serverless engineering</span>
+              <span className="text-sm text-pink-200/80">Software Engineering · AI-Assisted Development</span>
             </div>
             <p className="text-muted-foreground leading-relaxed mb-6">
               Worked on product development, AI-assisted coding, testing, debugging, and serverless workflows.
