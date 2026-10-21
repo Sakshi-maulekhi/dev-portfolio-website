@@ -11,13 +11,34 @@ export function Contact() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submissionStatus, setSubmissionStatus] = useState<"success" | "error" | null>(null)
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    const form = e.currentTarget
     setIsSubmitting(true)
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    setIsSubmitting(false)
+    setSubmissionStatus(null)
+
+    try {
+      const response = await fetch("https://formspree.io/f/mrpewykd", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+        },
+        body: new FormData(form),
+      })
+
+      if (!response.ok) {
+        throw new Error("The message could not be sent. Please try again.")
+      }
+
+      setSubmissionStatus("success")
+      form.reset()
+    } catch {
+      setSubmissionStatus("error")
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -67,16 +88,24 @@ export function Contact() {
               animate={isInView ? { opacity: 1, x: 0 } : {}}
               transition={{ delay: 0.4 }}
             >
-              <form onSubmit={handleSubmit} className="glass-pink rounded-2xl p-8 space-y-5 border border-pink-400/20">
+              <form
+                action="https://formspree.io/f/mrpewykd"
+                method="POST"
+                onSubmit={handleSubmit}
+                onChange={() => setSubmissionStatus(null)}
+                className="glass-pink rounded-2xl p-8 space-y-5 border border-pink-400/20"
+              >
                 <div>
                   <label htmlFor="name" className="text-sm font-semibold text-foreground mb-2 block">
                     Name
                   </label>
                   <Input
                     id="name"
+                    name="name"
                     placeholder="Your name"
                     className="bg-pink-400/5 border-pink-400/20 focus:border-pink-400/50 focus:bg-pink-400/10 text-foreground placeholder:text-muted-foreground"
                     required
+                    disabled={isSubmitting}
                   />
                 </div>
                 <div>
@@ -85,10 +114,12 @@ export function Contact() {
                   </label>
                   <Input
                     id="email"
+                    name="email"
                     type="email"
                     placeholder="your@email.com"
                     className="bg-pink-400/5 border-pink-400/20 focus:border-pink-400/50 focus:bg-pink-400/10 text-foreground placeholder:text-muted-foreground"
                     required
+                    disabled={isSubmitting}
                   />
                 </div>
                 <div>
@@ -97,10 +128,12 @@ export function Contact() {
                   </label>
                   <Textarea
                     id="message"
+                    name="message"
                     placeholder="Your message..."
                     rows={4}
                     className="bg-pink-400/5 border-pink-400/20 focus:border-pink-400/50 focus:bg-pink-400/10 text-foreground placeholder:text-muted-foreground resize-none"
                     required
+                    disabled={isSubmitting}
                   />
                 </div>
                 <motion.button
@@ -115,6 +148,8 @@ export function Contact() {
                       animate={{ rotate: 360 }}
                       transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
                       className="w-5 h-5 border-2 border-pink-400/30 border-t-pink-400 rounded-full inline-block"
+                      role="status"
+                      aria-label="Sending message"
                     />
                   ) : (
                     <>
@@ -123,6 +158,16 @@ export function Contact() {
                     </>
                   )}
                 </motion.button>
+                {submissionStatus === "success" && (
+                  <p role="status" className="text-sm text-green-400">
+                    Your message has been sent successfully.
+                  </p>
+                )}
+                {submissionStatus === "error" && (
+                  <p role="alert" className="text-sm text-destructive">
+                    The message could not be sent. Please check your connection and try again.
+                  </p>
+                )}
               </form>
             </motion.div>
 

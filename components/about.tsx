@@ -52,7 +52,7 @@ export function About() {
                 I&apos;m a <span className="text-foreground font-medium">B.Tech IT student</span> focused on building practical AI applications, automation workflows, and software projects that solve real-world problems.
               </p>
               <p className="text-muted-foreground leading-relaxed">
-                {"My work combines "}<span className="text-foreground font-medium">LLMs, RAG, AI agents, prompt engineering, and workflow automation</span>{" with modern software development. I&apos;ve built AI-powered customer support, document processing, social media automation, RAG applications, and full-stack software projects."}
+                {"My work combines "}<span className="text-foreground font-medium">LLMs, RAG, AI agents, prompt engineering, and workflow automation</span>{" with modern software development. I've built AI-powered customer support, document processing, social media automation, RAG applications, and full-stack software projects."}
               </p>
               <p className="text-muted-foreground leading-relaxed">
                 I also enjoy building complete software projects, including real-time collaborative and full-stack applications, giving me a strong foundation in software development and the ability to turn ideas into reliable, working solutions.
