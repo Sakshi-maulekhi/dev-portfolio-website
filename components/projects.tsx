@@ -223,34 +223,32 @@ function ProjectCard({ project, index, isInView, featured = false }: {
           </motion.div>
           
           {/* Overlay on hover for project actions */}
-          {(
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: isHovered ? 1 : 0 }}
-              className="absolute inset-0 bg-background/70 backdrop-blur-lg flex items-center justify-center gap-4"
-            >
-              {project.demo && (
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => window.open(project.demo, '_blank')}
-                  className="glass-pink px-4 py-2 rounded-lg font-medium text-sm text-foreground border border-pink-400/40 hover:border-pink-400/70"
-                >
-                  <ExternalLink className="inline mr-2 h-3 w-3" />
-                  Live Demo
-                </motion.button>
-              )}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: isHovered ? 1 : 0 }}
+            className="absolute inset-0 bg-background/70 backdrop-blur-lg flex items-center justify-center gap-4"
+          >
+            {project.demo && project.title !== "DocQuery AI – Production RAG PDF Assistant" && (
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => window.open(project.github, '_blank')}
-                className="glass px-4 py-2 rounded-lg font-medium text-sm border border-white/10 hover:border-pink-400/40"
+                onClick={() => window.open(project.demo, '_blank')}
+                className="glass-pink px-4 py-2 rounded-lg font-medium text-sm text-foreground border border-pink-400/40 hover:border-pink-400/70"
               >
-                <Github className="inline mr-2 h-3 w-3" />
-                GitHub
+                <ExternalLink className="inline mr-2 h-3 w-3" />
+                {project.category === "AI / GenAI / AI Automation" ? "Watch Demo" : "Live Demo"}
               </motion.button>
-            </motion.div>
-          )}
+            )}
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => window.open(project.github, '_blank')}
+              className="glass px-4 py-2 rounded-lg font-medium text-sm border border-white/10 hover:border-pink-400/40"
+            >
+              <Github className="inline mr-2 h-3 w-3" />
+              GitHub
+            </motion.button>
+          </motion.div>
         </div>
 
         {/* Content */}
