@@ -23,6 +23,7 @@ const projects: Project[] = [
     highlight: "Pinecone-based RAG · Ollama · n8n · AI Agents",
     tech: ["n8n", "AI Agents", "RAG", "Pinecone", "Ollama", "Gmail"],
     github: "https://github.com/Sakshi-maulekhi/ai-automation-workflows",
+    demo: "https://drive.google.com/file/d/17w1Y1TqYpGZySi3oMGRBrwlhWXiWk9BO/view?usp=sharing",
     category: "AI / GenAI / AI Automation",
     featured: true,
   },
@@ -32,6 +33,7 @@ const projects: Project[] = [
     highlight: "AI Agents · Prompt Engineering · Image Generation · n8n",
     tech: ["n8n", "AI Agents", "Prompt Engineering", "Image Generation"],
     github: "https://github.com/Sakshi-maulekhi/ai-automation-workflows",
+    demo: "https://drive.google.com/file/d/1LTZYECP0a50FTqWinNRktWzHUWMc8u9M/view?usp=sharing",
     category: "AI / GenAI / AI Automation",
   },
   {
@@ -40,6 +42,7 @@ const projects: Project[] = [
     highlight: "LLM Information Extraction · PDF Processing · Google Sheets",
     tech: ["n8n", "LLMs", "PDF Processing", "Google Drive", "Google Sheets"],
     github: "https://github.com/Sakshi-maulekhi/ai-automation-workflows",
+    demo: "https://drive.google.com/file/d/1jMIakcSJ6bRunjV8x6K6Jp3CqJVm2UQW/view?usp=sharing",
     category: "AI / GenAI / AI Automation",
   },
   {
@@ -48,6 +51,7 @@ const projects: Project[] = [
     highlight: "RAG · Embeddings · Vector Search · Ollama",
     tech: ["n8n", "RAG", "Ollama", "Vector Database", "Embeddings"],
     github: "https://github.com/Sakshi-maulekhi/ai-automation-workflows",
+    demo: "https://drive.google.com/file/d/1Krq9UfmPiabNSK4Mp4qw9buk-r2CtBrB/view?usp=sharing",
     category: "AI / GenAI / AI Automation",
   },
   {
@@ -218,33 +222,35 @@ function ProjectCard({ project, index, isInView, featured = false }: {
             <span className="text-4xl font-bold gradient-text opacity-30">{project.title[0]}</span>
           </motion.div>
           
-          {/* Overlay on hover */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: isHovered ? 1 : 0 }}
-            className="absolute inset-0 bg-background/70 backdrop-blur-lg flex items-center justify-center gap-4"
-          >
-            {project.demo && (
+          {/* Overlay on hover for full-stack project actions */}
+          {project.category === "Full Stack" && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: isHovered ? 1 : 0 }}
+              className="absolute inset-0 bg-background/70 backdrop-blur-lg flex items-center justify-center gap-4"
+            >
+              {project.demo && (
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => window.open(project.demo, '_blank')}
+                  className="glass-pink px-4 py-2 rounded-lg font-medium text-sm text-foreground border border-pink-400/40 hover:border-pink-400/70"
+                >
+                  <ExternalLink className="inline mr-2 h-3 w-3" />
+                  Live Demo
+                </motion.button>
+              )}
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => window.open(project.demo, '_blank')}
-                className="glass-pink px-4 py-2 rounded-lg font-medium text-sm text-foreground border border-pink-400/40 hover:border-pink-400/70"
+                onClick={() => window.open(project.github, '_blank')}
+                className="glass px-4 py-2 rounded-lg font-medium text-sm border border-white/10 hover:border-pink-400/40"
               >
-                <ExternalLink className="inline mr-2 h-3 w-3" />
-                Live Demo
+                <Github className="inline mr-2 h-3 w-3" />
+                GitHub
               </motion.button>
-            )}
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => window.open(project.github, '_blank')}
-              className="glass px-4 py-2 rounded-lg font-medium text-sm border border-white/10 hover:border-pink-400/40"
-            >
-              <Github className="inline mr-2 h-3 w-3" />
-              GitHub
-            </motion.button>
-          </motion.div>
+            </motion.div>
+          )}
         </div>
 
         {/* Content */}
@@ -269,6 +275,31 @@ function ProjectCard({ project, index, isInView, featured = false }: {
               </span>
             ))}
           </div>
+
+          {project.category === "AI / GenAI / AI Automation" && (
+            <div className="mt-5 flex items-center gap-2">
+              <a
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center rounded-lg border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-pink-400/50 hover:bg-pink-400/10"
+              >
+                <Github className="mr-1.5 h-3.5 w-3.5" />
+                GitHub
+              </a>
+              {project.demo && (
+                <a
+                  href={project.demo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center rounded-lg border border-pink-400/30 bg-pink-400/10 px-3 py-1.5 text-xs font-medium text-pink-100 transition-colors hover:border-pink-400/60 hover:bg-pink-400/20"
+                >
+                  <ExternalLink className="mr-1.5 h-3.5 w-3.5" />
+                  Watch Demo
+                </a>
+              )}
+            </div>
+          )}
         </div>
       </motion.div>
     </motion.div>
