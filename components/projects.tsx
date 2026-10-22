@@ -23,6 +23,7 @@ const projects: Project[] = [
     highlight: "Pinecone-based RAG · Ollama · n8n · AI Agents",
     tech: ["n8n", "AI Agents", "RAG", "Pinecone", "Ollama", "Gmail"],
     github: "https://github.com/Sakshi-maulekhi/ai-automation-workflows",
+    demo: "https://drive.google.com/file/d/17w1Y1TqYpGZySi3oMGRBrwlhWXiWk9BO/view?usp=sharing",
     category: "AI / GenAI / AI Automation",
     featured: true,
   },
@@ -32,6 +33,7 @@ const projects: Project[] = [
     highlight: "AI Agents · Prompt Engineering · Image Generation · n8n",
     tech: ["n8n", "AI Agents", "Prompt Engineering", "Image Generation"],
     github: "https://github.com/Sakshi-maulekhi/ai-automation-workflows",
+    demo: "https://drive.google.com/file/d/1LTZYECP0a50FTqWinNRktWzHUWMc8u9M/view?usp=sharing",
     category: "AI / GenAI / AI Automation",
   },
   {
@@ -40,6 +42,7 @@ const projects: Project[] = [
     highlight: "LLM Information Extraction · PDF Processing · Google Sheets",
     tech: ["n8n", "LLMs", "PDF Processing", "Google Drive", "Google Sheets"],
     github: "https://github.com/Sakshi-maulekhi/ai-automation-workflows",
+    demo: "https://drive.google.com/file/d/1jMIakcSJ6bRunjV8x6K6Jp3CqJVm2UQW/view?usp=sharing",
     category: "AI / GenAI / AI Automation",
   },
   {
@@ -48,6 +51,7 @@ const projects: Project[] = [
     highlight: "RAG · Embeddings · Vector Search · Ollama",
     tech: ["n8n", "RAG", "Ollama", "Vector Database", "Embeddings"],
     github: "https://github.com/Sakshi-maulekhi/ai-automation-workflows",
+    demo: "https://drive.google.com/file/d/1Krq9UfmPiabNSK4Mp4qw9buk-r2CtBrB/view?usp=sharing",
     category: "AI / GenAI / AI Automation",
   },
   {
@@ -218,13 +222,13 @@ function ProjectCard({ project, index, isInView, featured = false }: {
             <span className="text-4xl font-bold gradient-text opacity-30">{project.title[0]}</span>
           </motion.div>
           
-          {/* Overlay on hover */}
+          {/* Overlay on hover for project actions */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: isHovered ? 1 : 0 }}
             className="absolute inset-0 bg-background/70 backdrop-blur-lg flex items-center justify-center gap-4"
           >
-            {project.demo && (
+            {project.demo && project.title !== "DocQuery AI – Production RAG PDF Assistant" && (
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -232,7 +236,7 @@ function ProjectCard({ project, index, isInView, featured = false }: {
                 className="glass-pink px-4 py-2 rounded-lg font-medium text-sm text-foreground border border-pink-400/40 hover:border-pink-400/70"
               >
                 <ExternalLink className="inline mr-2 h-3 w-3" />
-                Live Demo
+                {project.category === "AI / GenAI / AI Automation" ? "Watch Demo" : "Live Demo"}
               </motion.button>
             )}
             <motion.button
@@ -269,6 +273,7 @@ function ProjectCard({ project, index, isInView, featured = false }: {
               </span>
             ))}
           </div>
+
         </div>
       </motion.div>
     </motion.div>
